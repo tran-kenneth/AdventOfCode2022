@@ -17,5 +17,12 @@ for line in lines:
         calorie_num = int(line[:len(line)-1])
         temp_elf_total += calorie_num
 
-print(calorie_total_by_elf)
+# Find elf with the most calories
 most_calories = max(calorie_total_by_elf)
+
+# Index of the elf with the most calories
+index_most_calories = [index for index, value in enumerate(
+    calorie_total_by_elf) if value == most_calories]
+
+# Output of the elf with the most calories
+print(index_most_calories, most_calories)
