@@ -35,3 +35,9 @@ score_key = {
     'C Y': 2+0,
     'C Z': 3+3
 }
+
+score_total = 0
+
+for line in clean_lines:
+    score_total += score_key[line]
+print(score_total)
