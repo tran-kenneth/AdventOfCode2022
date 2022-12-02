@@ -30,7 +30,7 @@ print(score_total)
 # Y means draw
 # Z means win
 
-new_score_key = {
+score_key_part_2 = {
     'A X': 3+0,
     'A Y': 1+3,
     'A Z': 2+6,
@@ -41,3 +41,9 @@ new_score_key = {
     'C Y': 3+3,
     'C Z': 1+6
 }
+
+score_total_part_2 = 0
+
+for line in clean_lines:
+    score_total_part_2 += score_key_part_2[line]
+print(score_total_part_2)
