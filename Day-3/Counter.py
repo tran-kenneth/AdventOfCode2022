@@ -32,3 +32,19 @@ def find_common_letter(list1, list2):
         for letter2 in list2:
             if (letter1 == letter2):
                 return letter1
+
+
+def sum_value_common_letters():
+    # Find value of common letter of each list and add to total
+    total_value = 0
+    for rucksack in clean_rucksacks:
+        half_index = int(len(rucksack)/2)
+        first_compartment = rucksack[:half_index]
+        second_compartment = rucksack[half_index:]
+        common_letter = find_common_letter(
+            first_compartment, second_compartment)
+        total_value += rucksack_key_values[common_letter]
+    print(total_value)
+
+
+sum_value_common_letters()
