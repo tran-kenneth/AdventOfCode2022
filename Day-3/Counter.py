@@ -48,3 +48,24 @@ def sum_value_common_letters():
 
 
 sum_value_common_letters()
+
+
+# Part 2
+group_of_rucksacks = []
+
+
+def group_rucksacks_in_3():
+    # Group all rucksacks into lists with 3 rucksacks
+    count_to_3 = 0
+    temp_group = []
+    for rucksack in clean_rucksacks:
+        temp_group.append(rucksack)
+        count_to_3 += 1
+        if count_to_3 > 2:
+            group_of_rucksacks.append(temp_group)
+            count_to_3 = 0
+            temp_group = []
+
+
+group_rucksacks_in_3()
+print(group_of_rucksacks)
