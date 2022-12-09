@@ -23,3 +23,12 @@ rucksack_key_values = {
 
 # Remove new lines from input
 clean_rucksacks = [rucksack[:-1] for rucksack in rucksacks]
+
+
+def find_common_letter(list1, list2):
+  # Find the common letter in two lists
+    print(list1, list2)
+    for letter1 in list1:
+        for letter2 in list2:
+            if (letter1 == letter2):
+                return letter1
