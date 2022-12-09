@@ -67,7 +67,6 @@ def group_rucksacks_in_3():
 
 
 group_rucksacks_in_3()
-print(group_of_rucksacks)
 
 
 def find_common_letter_in_group(three_rucksacks):
@@ -84,3 +83,14 @@ def find_common_letter_in_group(three_rucksacks):
         for letter3 in three_rucksacks[2]:
             if (letter == letter3):
                 return letter
+
+
+def sum_value_from_groups():
+    total_value = 0
+    for groups in group_of_rucksacks:
+        common_letter = find_common_letter_in_group(groups)
+        total_value += rucksack_key_values[common_letter]
+    return total_value
+
+
+print(sum_value_from_groups())
