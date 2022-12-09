@@ -27,7 +27,6 @@ clean_rucksacks = [rucksack[:-1] for rucksack in rucksacks]
 
 def find_common_letter(list1, list2):
   # Find the common letter in two lists
-    print(list1, list2)
     for letter1 in list1:
         for letter2 in list2:
             if (letter1 == letter2):
@@ -44,10 +43,10 @@ def sum_value_common_letters():
         common_letter = find_common_letter(
             first_compartment, second_compartment)
         total_value += rucksack_key_values[common_letter]
-    print(total_value)
+    return total_value
 
 
-sum_value_common_letters()
+print(sum_value_common_letters())
 
 
 # Part 2
@@ -69,3 +68,19 @@ def group_rucksacks_in_3():
 
 group_rucksacks_in_3()
 print(group_of_rucksacks)
+
+
+def find_common_letter_in_group(three_rucksacks):
+    # Find the common letter among 3 rucksacks
+
+    # Find common letters in first pair
+    common_letters_first_pair = []
+    for letter1 in three_rucksacks[0]:
+        for letter2 in three_rucksacks[1]:
+            if (letter1 == letter2):
+                common_letters_first_pair.append(letter1)
+
+    for letter in common_letters_first_pair:
+        for letter3 in three_rucksacks[2]:
+            if (letter == letter3):
+                return letter
