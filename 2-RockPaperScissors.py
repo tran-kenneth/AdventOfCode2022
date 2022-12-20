@@ -1,5 +1,8 @@
+import os
+
 # Read input file.
-file = open('input2.txt')
+current_path = os.path.dirname(__file__)
+file = open(current_path + '/Inputs/2-input.txt')
 lines = [line for line in file.readlines()]
 file.close()
 
