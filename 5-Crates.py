@@ -54,3 +54,18 @@ def print_move_list():
 
 parse_stacks()
 parse_moves()
+
+
+def perform_moves():
+    for moves in move_list:
+        num_to_move = int(moves[0])
+        index_of_origin_stack = int(moves[1]) - 1
+        index_of_end_stack = int(moves[2]) - 1
+
+        for box in range(num_to_move):
+            box_moved = stacks[index_of_origin_stack].pop()
+            stacks[index_of_end_stack].append(box_moved)
+
+
+perform_moves()
+print_stacks()
