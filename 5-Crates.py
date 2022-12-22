@@ -67,5 +67,26 @@ def perform_moves():
             stacks[index_of_end_stack].append(box_moved)
 
 
-perform_moves()
+def perform_moves_multibox():
+    #count = 0
+    for moves in move_list:
+        num_to_move = int(moves[0])
+        index_of_origin_stack = int(moves[1]) - 1
+        index_of_end_stack = int(moves[2]) - 1
+
+        originating_stack = stacks[index_of_origin_stack]
+        ending_stack = stacks[index_of_end_stack]
+
+        boxes_to_move = originating_stack[len(
+            originating_stack) - num_to_move:]
+        #print("before", originating_stack, boxes_to_move)
+        #print("move", ending_stack, boxes_to_move)
+        del originating_stack[len(originating_stack) - num_to_move:]
+        stacks[index_of_end_stack] = ending_stack + boxes_to_move
+        #print("after", originating_stack, ending_stack)
+        #print("move line: ", count + 11, "\n")
+        #count += 1
+
+
+perform_moves_multibox()
 print_stacks()
