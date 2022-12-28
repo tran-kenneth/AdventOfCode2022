@@ -14,7 +14,7 @@ input_character_buffer = lines[0][:-1]
 # print(four_char)
 
 
-def find_index():
+def find_marker_4():
     for char_index_start in range(len(input_character_buffer) - 3):
         char_index_end = char_index_start + 4
         four_char = input_character_buffer[char_index_start:char_index_end]
@@ -27,4 +27,16 @@ test_chars = "qqwe"
 set_test_chars = set(test_chars)
 print(len(set_test_chars))
 
-print(find_index())
+print(find_marker_4())
+
+
+def find_marker_14():
+    for char_index_start in range(len(input_character_buffer) - 13):
+        char_index_end = char_index_start + 14
+        four_char = input_character_buffer[char_index_start:char_index_end]
+        set_of_four_chars = set(four_char)
+        if (len(set_of_four_chars) == 14):
+            return char_index_end
+
+
+print(find_marker_14())
