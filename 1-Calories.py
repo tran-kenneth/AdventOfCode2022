@@ -6,8 +6,10 @@ file = open(current_path + '/Inputs/1-input.txt')
 lines = [line for line in file.readlines()]
 file.close()
 
+# Array with calorie total by elf
 calorie_total_by_elf = []
 
+# Temporary total used to count for calories held by one elf
 temp_elf_total = 0
 
 # Sum total of calories carried by each elf.
