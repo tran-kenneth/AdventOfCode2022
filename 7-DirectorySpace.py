@@ -1,4 +1,5 @@
 import os
+import re
 
 # Read input file.
 current_path = os.path.dirname(__file__)
@@ -9,39 +10,49 @@ file.close()
 clean_lines = [line[:-1] for line in lines]
 # print(clean_lines)
 
-# Create Dictionary to represent directory file space?
-device_files = {}
-current_cursor = None
+
+class Folder:
+    def __init__(self, name="new folder"):
+        self.name = name
+        self.contents = []
+
+    def add_folder(self, name):
+        new_folder = Folder(name)
+        self.contents.append(new_folder)
+
+    def add_file(self, name, size):
+        new_file = File(name, size)
+        self.contents.append(new_file)
 
 
-def handle_cd(command):
-    directory = command[5:]
-    current_cursor = directory
-
-    try:
-        print(device_files[directory])
-    except:
-        device_files[directory] = {}
-
-    current_cursor = device_files[directory]
-    return
+class File:
+    def __init__(self, name, size):
+        self.name = name
+        self.size = size
 
 
-def handle_ls():
-    return
+root_node = Folder("/")
+for cmd_line in clean_lines:
+    cd_command = re.match(r"\$ cd (.+)", cmd_line)
+    print(cmd_line, cd_command)
+    if (cd_command):
+        print(cd_command.group())
 
-
-count = 0
-for command in clean_lines:
-    if command[:4] == '$ cd':
-        handle_cd(command)
-        print(command)
-
-    if command[:4] == '$ ls':
-        handle_ls()
-        print(command)
-    count += 1
-    if (count > 10):
+    if cmd_line == "dir dmd":
         break
+    ...
 
-print(device_files)
+
+command_count = 0
+commands = []
+for input_line in clean_lines:
+    if "$" in input_line:
+        command_count += 1
+
+# Enum, group ls lists with
+# for k, v in enumerate(clean_lines):
+#    print(k, v)
+#    if k == 10:
+#        break
+
+print(command_count)
