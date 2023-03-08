@@ -1,58 +1,57 @@
 import os
 import re
 
-# Read input file.
-current_path = os.path.dirname(__file__)
-file = open(current_path + '/Inputs/7-input.txt')
-lines = [line for line in file.readlines()]
-file.close()
 
-clean_lines = [line[:-1] for line in lines]
-# print(clean_lines)
-
-
-class Folder:
-    def __init__(self, name="new folder"):
+class Node:
+    def __init__(self, type, name, data=None, parent=None):
+        self.type = type
         self.name = name
-        self.contents = []
+        self.parent = parent
 
-    def add_folder(self, name):
-        new_folder = Folder(name)
-        self.contents.append(new_folder)
+        self.data = data
+        if (self.type == "dir"):
+            self.children = []
 
-    def add_file(self, name, size):
-        new_file = File(name, size)
-        self.contents.append(new_file)
+    def add_child(self, type, name, data=None):
+        child = Node(type=type, name=name, data=data, parent=self)
+        self.children.append(child)
 
+    def count_child_values(self):
+        total = 0
+        for child in self.children:
+            if (child.type == "dir"):
+                total += child.count_child_values()
+            elif (child.type == "file"):
+                total += child.data
+        return total
 
-class File:
-    def __init__(self, name, size):
-        self.name = name
-        self.size = size
-
-
-root_node = Folder("/")
-for cmd_line in clean_lines:
-    cd_command = re.match(r"\$ cd (.+)", cmd_line)
-    print(cmd_line, cd_command)
-    if (cd_command):
-        print(cd_command.group())
-
-    if cmd_line == "dir dmd":
-        break
-    ...
+    def __str__(self):
+        if (self.type == "dir"):
+            return f'Name: {self.name}\nChildren: {self.children}\nData: {self.data}\nParent: {self.parent}'
+        else:
+            return f'Name: {self.name}\nData: {self.data}\nParent: {self.parent}'
 
 
-command_count = 0
-commands = []
-for input_line in clean_lines:
-    if "$" in input_line:
-        command_count += 1
+def main():
+    # Read input file.
+    current_path = os.path.dirname(__file__)
+    file = open(current_path + '/Inputs/7-input.txt')
+    lines = [line for line in file.readlines()]
+    file.close()
 
-# Enum, group ls lists with
-# for k, v in enumerate(clean_lines):
-#    print(k, v)
-#    if k == 10:
-#        break
+    clean_lines = [line[:-1] for line in lines]
 
-print(command_count)
+    for cmd_line in clean_lines:
+        cd_command = re.match(r"\$ cd (.+)", cmd_line)
+        #print(cmd_line, cd_command)
+        if (cd_command):
+            # print(cd_command.group(1))
+            dir_name = cd_command.group(1)
+
+        if cmd_line == "dir dmd":
+            break
+        ...
+
+
+if __name__ == "__main__":
+    main()
