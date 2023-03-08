@@ -9,6 +9,7 @@ class Node:
         self.parent = parent
 
         self.data = data
+
         if (self.type == "dir"):
             self.children = []
 
@@ -39,18 +40,72 @@ def main():
     lines = [line for line in file.readlines()]
     file.close()
 
-    clean_lines = [line[:-1] for line in lines]
+    clean_lines = [line[:-1] for line in lines[1:]]
+
+    root_node = Node(type="dir", name="/")
+    pwd = root_node
 
     for cmd_line in clean_lines:
-        cd_command = re.match(r"\$ cd (.+)", cmd_line)
-        #print(cmd_line, cd_command)
-        if (cd_command):
-            # print(cd_command.group(1))
-            dir_name = cd_command.group(1)
+        if (is_command(cmd_line)):
+            instructions = parse_command(cmd_line)
 
-        if cmd_line == "dir dmd":
-            break
+            if (instructions["command"] == "ls"):
+                pass
+            elif (instructions["command"] == "cd"):
+                dir_name = instructions["dir"]
+
+                if dir_name == "..":
+                    pwd = pwd.parent
+                else:
+                    for child in pwd.children:
+                        if child.name == dir_name:
+                            pwd = child
+
+        elif (is_dir(cmd_line)):
+            dir_name = parse_dir(cmd_line)
+            pwd.add_child(type="dir", name=dir_name)
+
+        else:
+            file_info = parse_file(cmd_line)
+            pwd.add_child(
+                type="file", name=file_info["name"], data=file_info["data"])
+
+    print(root_node.count_child_values())
+
+    small_dirs = []
+
+    for node in root_node.children:
+
         ...
+
+
+def is_command(line):
+    return line[0] == "$"
+
+
+def is_dir(line):
+    return line[:3] == "dir"
+
+
+def parse_command(line):
+    cmd_regex = re.match(r"\$ (\w+)( .+)?", line)
+    return {
+        "command": cmd_regex.group(1),
+        "dir": cmd_regex.group(2)
+    }
+
+
+def parse_dir(line):
+    dir_regex = re.match(r"dir (\w+)", line)
+    return dir_regex.group(1)
+
+
+def parse_file(line):
+    file_regex = re.match(r"(\d+) (.+)", line)
+    return {
+        "data": int(file_regex.group(1)),
+        "name": file_regex.group(2)
+    }
 
 
 if __name__ == "__main__":
