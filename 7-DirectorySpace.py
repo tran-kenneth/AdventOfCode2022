@@ -84,15 +84,35 @@ def main():
                 if 0 < dir_size <= 100000:
                     small_dirs.append(dir_size)
                 count_small_dirs(node.children)
-
     count_small_dirs(root_node.children)
-
-    starting_total = root_node.count_child_values()
 
     small_dir_total = 0
     for size in small_dirs:
         small_dir_total += size
-    print(small_dir_total)
+    print("Total all dirs < 100k:", small_dir_total)
+
+    # Information remaining
+    total_available = 70000000
+    desired_available = 30000000
+    current_occupied = root_node.count_child_values()
+    print("Current occupied:", current_occupied)
+
+    large_enough_dirs = []
+
+    to_delete = current_occupied - (total_available - desired_available)
+    print(f'To delete: {to_delete}')
+
+    def count_large_dirs(node_list):
+        for node in node_list:
+            if (node.type == "dir"):
+                dir_size = node.count_child_values()
+                if dir_size >= to_delete:
+                    large_enough_dirs.append(dir_size)
+                count_large_dirs(node.children)
+
+    count_large_dirs(root_node.children)
+    print(large_enough_dirs)
+    print(f'Smallest dir: {min(large_enough_dirs)}')
 
 
 def is_command(line):
