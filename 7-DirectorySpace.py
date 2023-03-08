@@ -59,6 +59,7 @@ def main():
                 else:
                     for child in pwd.children:
                         if child.name == dir_name:
+                            #print(f'pwd: {child.name}')
                             pwd = child
 
         elif (is_dir(cmd_line)):
@@ -70,13 +71,28 @@ def main():
             pwd.add_child(
                 type="file", name=file_info["name"], data=file_info["data"])
 
-    print(root_node.count_child_values())
+    # print(root_node.count_child_values())
 
     small_dirs = []
 
-    for node in root_node.children:
+    def count_small_dirs(node_list):
+        for node in node_list:
+            if (node.type == "dir"):
+                # print(
+                #    f"Dir: {node.name}, Children: {node.count_child_values()}")
+                dir_size = node.count_child_values()
+                if 0 < dir_size <= 100000:
+                    small_dirs.append(dir_size)
+                count_small_dirs(node.children)
 
-        ...
+    count_small_dirs(root_node.children)
+
+    starting_total = root_node.count_child_values()
+
+    small_dir_total = 0
+    for size in small_dirs:
+        small_dir_total += size
+    print(small_dir_total)
 
 
 def is_command(line):
@@ -88,7 +104,7 @@ def is_dir(line):
 
 
 def parse_command(line):
-    cmd_regex = re.match(r"\$ (\w+)( .+)?", line)
+    cmd_regex = re.match(r"\$ (\w+) ?(.+)?", line)
     return {
         "command": cmd_regex.group(1),
         "dir": cmd_regex.group(2)
